@@ -1,5 +1,7 @@
 from shape import Shape
+import logging
 
+logger = logging.getLogger(__name__)
 
 
 class Rectangle(Shape):
@@ -14,6 +16,7 @@ class Rectangle(Shape):
         super().__init__(shape_id, "rectangle")
         self.width = width
         self.height = height
+        logger.info("shape rectangle with id: -%s- created successfully", shape_id)
 
     def get_area(self) -> float:
         """
