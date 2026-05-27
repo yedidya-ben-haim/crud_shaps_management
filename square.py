@@ -1,5 +1,7 @@
 from shape import Shape
 
+
+
 class Square(Shape):
     """
         Represents a square shape, inheriting from the base Shape class.

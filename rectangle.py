@@ -1,14 +1,17 @@
 from shape import Shape
-    """
-    Represents a rectangle shape, inheriting from the base Shape class.
-    """
-class Rectangle(Shape):
 
-    def __init__(self, shape_id, shape_type, width, height) -> None:
+
+
+class Rectangle(Shape):
+    """
+        Represents a rectangle shape, inheriting from the base Shape class.
+    """
+
+    def __init__(self, shape_id, width, height) -> None:
         """
             Initializes a new Rectangle instance.
         """
-        super().__init__(shape_id, shape_type)
+        super().__init__(shape_id, "rectangle")
         self.width = width
         self.height = height
 
