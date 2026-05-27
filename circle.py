@@ -15,6 +15,12 @@ class Circle(Shape):
             Initializes a new Circle instance.
         """
         super().__init__(shape_id, "circle")
+
+        # Input Validity Check
+        if not isinstance(radius, (int, float)) or radius <= 0:
+            logger.error("Failed to create circle. Invalid radius: %s", radius)
+            raise ValueError("Error: The length of a radius of a circle must be a number greater than zero.")
+
         self.radius = radius
         logger.info("shape circle with id: -%s- created successfully", shape_id)
 
