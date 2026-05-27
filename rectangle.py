@@ -14,6 +14,12 @@ class Rectangle(Shape):
             Initializes a new Rectangle instance.
         """
         super().__init__(shape_id, "rectangle")
+
+        # Input Validity Check
+        if not isinstance(width,height (int, float)) or (width <= 0 and height <= 0):
+            logger.error("Failed to create rectangle. Invalid width or height: %s", width, height)
+            raise ValueError("Error: The length of width or heigh of a rectangle must be a number greater than zero.")
+
         self.width = width
         self.height = height
         logger.info("shape rectangle with id: -%s- created successfully", shape_id)
