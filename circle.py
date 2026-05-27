@@ -1,5 +1,8 @@
 import math
 from shape import Shape
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Circle(Shape):
@@ -13,6 +16,8 @@ class Circle(Shape):
         """
         super().__init__(shape_id, "circle")
         self.radius = radius
+        logger.info("shape circle with id: -%s- created successfully", shape_id)
+
 
     def get_area(self) -> float:
         """
