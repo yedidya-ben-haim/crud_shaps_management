@@ -17,6 +17,7 @@ class ShapeManager:
         """
         self.shapes = []
         self.load_from_json()
+        logger.info("ShapeManager initialized")
 
     def create_shape(self, shape_dic: dict) -> object:
         """
@@ -62,7 +63,7 @@ class ShapeManager:
         """
         pass
 
-    def update_shape(self, shape_id, new_data):
+    def update_shape(self, shape_id, new_data: int | float):
         """
             Finds a shape by its unique ID and updates its properties with the provided new data.
         """
@@ -82,6 +83,24 @@ class ShapeManager:
 
     def load_from_json(self):
         """
-            Reads data from the JSON file, reconstructs the appropriate shape objects, and populates the shapes list.
+            Reads data from the JSON file, reconstructs the appropriate shape objects,
+            and populates the shapes list.
         """
-        pass
+        try:
+            with open("shapes.json", "r", encoding="utf-8") as file:
+                shape_list = json.load(file)
+                logger.info("Shapes loaded from JSON")
+
+                for shape in shape_list:
+                    self.create_shape(shape)
+
+
+        except FileNotFoundError:
+            logger.exception("File not found")
+
+
+
+
+
+
+
