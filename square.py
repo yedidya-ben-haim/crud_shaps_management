@@ -44,6 +44,6 @@ class Square(Shape):
             Converts the square properties into a dictionary format.
         """
         return {"id":self.id,
-                "type":self.shape_type,
+                "shape_type":self.shape_type,
                 "side":self.side}
 

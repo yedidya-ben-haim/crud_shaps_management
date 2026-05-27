@@ -41,7 +41,7 @@ class Rectangle(Shape):
             Converts the rectangle properties into a dictionary format.
         """
         return {"id":self.id,
-                "type":self.shape_type,
+                "shape_type":self.shape_type,
                 "width":self.width,
                 "height":self.height}
 
@@ -49,3 +49,4 @@ class Rectangle(Shape):
 
 
 
+wer

@@ -42,7 +42,7 @@ class Circle(Shape):
             Converts the circle properties into a dictionary format.
         """
         return {"id": self.id,
-                "type": self.shape_type,
+                "shape_type": self.shape_type,
                 "radius": self.radius}
 
 

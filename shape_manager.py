@@ -1,3 +1,11 @@
+import json
+from circle import Circle
+from rectangle import Rectangle
+from square import Square
+from circle import Circle
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ShapeManager:
@@ -6,15 +14,47 @@ class ShapeManager:
         """
             Initializes the ShapeManager, creates an empty list for shapes,
             and loads existing shapes from the JSON file.
-            """
+        """
         self.shapes = []
         self.load_from_json()
 
-    def create_shape(self, shape):
+    def create_shape(self, shape_dic: dict) -> object:
         """
-            Adds a new shape object to the manager's list
-            and saves the updated list to the JSON file.
+        Creates a new shape object from a dictionary,
+        adds it to the shapes list.
         """
+        try:
+            if shape_dic["shape_type"] == "rectangle":
+                new_shape = Rectangle(shape_dic["id"], shape_dic["width"], shape_dic["height"])
+            elif shape_dic["shape_type"] == "circle":
+                new_shape = Circle(shape_dic["id"], shape_dic["radius"])
+            elif shape_dic["shape_type"] == "square":
+                new_shape = Square(shape_dic["id"], shape_dic["side"])
+            else:
+                logger.error("Shape type not recognized")
+                raise ValueError("Shape type not recognized")
+
+            logger.info("Creating new shape: {%s}", new_shape)
+            self.shapes.append(new_shape)
+            logger.info("Shape: {%s} append to the shape list", new_shape)
+
+            return new_shape
+
+
+
+        except ValueError as e:
+            # טיפול בשגיאות של ערכים לא חוקיים שהוזנו
+            logger.exception("ValueError occurred: %s", e)
+            print(f"\n Error in entered values: {e}")
+            return None
+
+
+        except KeyError as e:
+
+            # טיפול בשגיאה שבה חסרים נתונים במילון (למשל, אין מפתח 'radius' עבור מעגל)
+            logger.exception("KeyError occurred, missing data: %s", e)
+            print(f"\nMissing data {e} to create the shape")
+            return None
 
     def get_all_shapes(self):
         """
