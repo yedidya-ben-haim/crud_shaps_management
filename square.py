@@ -14,6 +14,12 @@ class Square(Shape):
             Initializes a new Square instance.
         """
         super().__init__(shape_id, "square")
+
+        # Input Validity Check
+        if not isinstance(side, (int, float)) or side <= 0:
+            logger.error("Failed to create square. Invalid side: %s", side)
+            raise ValueError("Error: The length of a side of a square must be a number greater than zero.")
+
         self.side = side
         logger.info("shape square with id: -%s- created successfully", shape_id)
 
