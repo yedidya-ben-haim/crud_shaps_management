@@ -37,9 +37,12 @@ class ShapeManager:
                 logger.error("Shape type not recognized")
                 raise ValueError("Shape type not recognized")
 
-            logger.info("Creating new shape: %s", shape_dic["shape_type"])
+            logger.info("Creating new shape: %s", new_shape.to_dict())
+            print(f"""--- New Shape ---
+                    {new_shape.to_dict()}
+                    added successfully""")
             self.shapes.append(new_shape)
-            logger.info("Shape: %s append to the shape list", shape_dic["shape_type"])
+            logger.info("Shape: -%s- %s append to the shape list", new_shape.id, new_shape.shape_type)
 
             return new_shape
         except ValueError as e:
@@ -48,11 +51,9 @@ class ShapeManager:
             raise ValueError (f"\n Error in entered values: {e}")
 
         except KeyError as e:
-
             # טיפול בשגיאה שבה חסרים נתונים במילון (למשל, אין מפתח 'radius' עבור מעגל)
-            logger.exception("KeyError occurred, missing data: %s", e)
-            raise KeyError(f"\nMissing data {e} to create the shape")
-
+            logger.warning("KeyError occurred, missing data: %s", e)
+            raise KeyError(f"Missing data {e} to create the shape")
 
     def get_all_shapes(self):
         """
@@ -75,6 +76,8 @@ class ShapeManager:
                 if key not in ["id", "shape_type"]: # type מעבר רק על השאר הנתונים שהם לא id
                     print(f"{key.capitalize()}: {value}")
                     logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
+            print(f"Area: {shape.get_area()}")
+            print(f"Perimeter: {shape.get_perimeter()}")
         return self.shapes
 
     def update_shape(self, shape_id, new_data: tuple):
@@ -164,7 +167,7 @@ class ShapeManager:
         for shape in self.shapes:
             if shape.id > max_id:
                 max_id = shape.id
-        new_id = max_id +1
+        new_id = max_id + 1
         logger.info(f"New ID find: {new_id}")
         return new_id
 
