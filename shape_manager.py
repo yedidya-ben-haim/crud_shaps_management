@@ -88,13 +88,19 @@ class ShapeManager:
                     shape.radius = new_data[0]
                 elif shape.shape_type == "square":
                     shape.side = new_data[0]
-
+                print(f"""shape: {shape.id} type: {shape.shape_type.capitalize()}
+                        updated successfully
+                        the new details: {shape.to_dict()}""")
+                logger.info("Shape: %s %s updated successfully", shape.id, shape.shape_type)
 
     def delete_shape(self, shape_id):
         """
             Removes a shape from the manager's list by its ID and updates the JSON file.
         """
-        pass
+        for shape in self.shapes:
+            if shape.id == shape_id:
+                self.shapes.remove(shape)
+                logger.info("Shape: %s removed successfully", shape.to_dict())
 
     def save_to_json(self):
         """
