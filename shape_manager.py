@@ -67,7 +67,7 @@ class ShapeManager:
 
         print("\n--- All Shapes ---")
         for shape in self.shapes:
-            # הדפסת המזהה והסוג
+            # print id and type
             print(f"ID: {shape.id}")
             print(f"Type: {shape.shape_type.capitalize()}")
 
@@ -76,8 +76,10 @@ class ShapeManager:
                 if key not in ["id", "shape_type"]: # type מעבר רק על השאר הנתונים שהם לא id
                     print(f"{key.capitalize()}: {value}")
                     logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
-            print(f"Area: {shape.get_area()}")
-            print(f"Perimeter: {shape.get_perimeter()}")
+            print(f"Area: {shape.get_area():.2f}")
+            print(f"Perimeter: {shape.get_perimeter():.2f}")
+            print(f"--------------------")
+
         return self.shapes
 
     def update_shape(self, shape_id, new_data: tuple):
@@ -93,9 +95,6 @@ class ShapeManager:
                     shape.radius = new_data[0]
                 elif shape.shape_type == "square":
                     shape.side = new_data[0]
-                print(f"""shape: {shape.id} type: {shape.shape_type.capitalize()}
-                        updated successfully
-                        the new details: {shape.to_dict()}""")
                 logger.info("Shape: %s %s updated successfully", shape.id, shape.shape_type)
 
     def delete_shape(self, shape_id):
@@ -106,6 +105,7 @@ class ShapeManager:
             if shape.id == shape_id:
                 self.shapes.remove(shape)
                 logger.info("Shape: %s removed successfully", shape.to_dict())
+                break
 
     def save_to_json(self):
         """
