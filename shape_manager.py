@@ -152,7 +152,10 @@ class ShapeManager:
             self.shapes = []
 
     def get_shape_by_id(self, shape_id):
-        pass
+        for shape in self.shapes:
+            if shape.id == shape_id:
+                return shape
+        return None
 
     def get_new_id(self):
         """Returns a new, free ID."""
@@ -162,6 +165,7 @@ class ShapeManager:
             if shape.id > max_id:
                 max_id = shape.id
         new_id = max_id +1
+        logger.info(f"New ID find: {new_id}")
         return new_id
 
 
