@@ -16,9 +16,10 @@ class Rectangle(Shape):
         super().__init__(shape_id, "rectangle")
 
         # Input Validity Check
-        if not isinstance(width,height (int, float)) or (width <= 0 and height <= 0):
+        if not isinstance(width, (int, float)) or width <= 0 or \
+                not isinstance(height, (int, float)) or height <= 0:
             logger.error("Failed to create rectangle. Invalid width or height: %s", width, height)
-            raise ValueError("Error: The length of width or heigh of a rectangle must be a number greater than zero.")
+            raise ValueError("The length of width or heigh of a rectangle must be a number greater than zero.")
 
         self.width = width
         self.height = height
@@ -44,9 +45,3 @@ class Rectangle(Shape):
                 "shape_type":self.shape_type,
                 "width":self.width,
                 "height":self.height}
-
-
-
-
-
-wer
