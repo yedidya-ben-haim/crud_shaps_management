@@ -1,4 +1,6 @@
 import json
+
+import shape
 from circle import Circle
 from rectangle import Rectangle
 from square import Square
@@ -43,14 +45,14 @@ class ShapeManager:
         except ValueError as e:
             # טיפול בשגיאות של ערכים לא חוקיים שהוזנו
             logger.error("ValueError occurred: %s", e)
-            print(f"\n Error in entered values: {e}")
-            return None
+            raise ValueError (f"\n Error in entered values: {e}")
+
         except KeyError as e:
 
             # טיפול בשגיאה שבה חסרים נתונים במילון (למשל, אין מפתח 'radius' עבור מעגל)
             logger.exception("KeyError occurred, missing data: %s", e)
-            print(f"\nMissing data {e} to create the shape")
-            return None
+            raise KeyError(f"\nMissing data {e} to create the shape")
+
 
     def get_all_shapes(self):
         """
@@ -106,7 +108,26 @@ class ShapeManager:
         """
             Converts all shape objects into dictionaries and writes them to the shapes JSON file.
         """
-        pass
+        try:
+            # 1. יצירת רשימה של מילונים מתוך רשימת האובייקטים של הצורות
+            # אנחנו משתמשים בפונקציית to_dict שנמצאת בכל צורה כדי לקבל את הנתונים שלה
+            shapes_data = [shape.to_dict() for shape in self.shapes]
+
+            # 2. פתיחת קובץ ה-JSON למצב כתיבה ("w") ושמירת הנתונים
+            with open("shapes.json", "w", encoding="utf-8") as file:
+                # indent=4 דואג שהקובץ יישמר עם ירידות שורות והזחות כדי שיהיה קריא לבני אדם
+                json.dump(shapes_data, file, indent=4)
+
+            # רישום בלוג והדפסה למשתמש שהפעולה הצליחה
+            logger.info("Successfully saved %s shapes to JSON.", len(self.shapes))
+            print("\nAll shapes have been successfully saved to shapes.json")
+
+        except Exception as e:
+
+            logger.exception("Failed to save shapes to JSON: %s", e)
+            print(f"\nAn error occurred while saving to JSON: {e}")
+
+
 
     def load_from_json(self):
         """
