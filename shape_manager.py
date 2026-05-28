@@ -75,10 +75,19 @@ class ShapeManager:
                     logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
         return self.shapes
 
-    def update_shape(self, shape_id, new_data: tuple[]):
+    def update_shape(self, shape_id, new_data: tuple):
         """
             Finds a shape by its unique ID and updates its properties with the provided new data.
         """
+        for shape in self.shapes:
+            if shape.id == shape_id:
+                if shape.shape_type == "rectangle":
+                    shape.width = new_data[0]
+                    shape.height = new_data[1]
+                elif shape.shape_type == "circle":
+                    shape.radius = new_data[0]
+                elif shape.shape_type == "square":
+                    shape.side = new_data[0]
 
 
     def delete_shape(self, shape_id):
@@ -116,6 +125,9 @@ class ShapeManager:
         except json.decoder.JSONDecodeError:
             logger.warning("shapes.json is empty or invalid. Starting with an empty list.")
             self.shapes = []
+
+    def get_shape_by_id(self, shape_id):
+        pass
 
 
 
