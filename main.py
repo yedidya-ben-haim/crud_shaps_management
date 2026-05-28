@@ -81,24 +81,29 @@ def main():
             try:
                 shape_id = int(input("Enter the ID of the shape to update: "))
                 shape_to_update = manager.get_shape_by_id(shape_id)
-                    if shape_to_update not None: # the shape found
-                        new_data = ()
-                        if shape_to_update.shape_type == "rectangle":
-                            width = input("Enter the new side width: ")
-                            length = input("Enter the new length: ")
-                            new_data = (width, length)
-                        elif shape_to_update.shape_type == "circle":
-                            radius = float(input("Enter the new radius: "))
-                            new_data = (radius,)
-                        elif shape_to_update.shape_type == "square":
-                            side = float(input("Enter the new side length: "))
-                            new_data = (side,)
-                        manager.update_shape(shape_id, new_data)
-                        print(f"""shape: {shape_to_update.id} type: {shape_to_update.shape_type.capitalize()}
-                                                updated successfully
-                                                the new details: {shape_to_update.to_dict()}""")
+
+
+                if shape_to_update is not None:
+                    new_data = ()
+                    if shape_to_update.shape_type == "rectangle":
+                        width = float(input("Enter the new side width: "))
+                        length = float(input("Enter the new length: "))
+                        new_data = (width, length)
+                    elif shape_to_update.shape_type == "circle":
+                        radius = float(input("Enter the new radius: "))
+                        new_data = (radius,)
+                    elif shape_to_update.shape_type == "square":
+                        side = float(input("Enter the new side length: "))
+                        new_data = (side,)
+
+                    manager.update_shape(shape_id, new_data)
+                    print(f"""shape: {shape_to_update.id} type: {shape_to_update.shape_type.capitalize()}
+                                                        updated successfully
+                                                        the new details: {shape_to_update.to_dict()}""")
+                else:
+                    print("Shape not found.")
             except ValueError:
-                print("Invalid ID! Please enter a number.")
+                print("Invalid input! Please enter a valid number.")
 
         # Option 4: Delete
         elif choice == '4':
