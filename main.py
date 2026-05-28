@@ -80,9 +80,23 @@ def main():
             logger.info("Update shape chosen")
             try:
                 shape_id = int(input("Enter the ID of the shape to update: "))
-                # We will gather the new data dictionary once we implement the function
-                manager.update_shape(shape_id, {})
-                print("Update function called (Requires implementing 'update_shape' in manager).")
+                shape_to_update = manager.get_shape_by_id(shape_id)
+                    if shape_to_update not None: # the shape found
+                        new_data = ()
+                        if shape_to_update.shape_type == "rectangle":
+                            width = input("Enter the new side width: ")
+                            length = input("Enter the new length: ")
+                            new_data = (width, length)
+                        elif shape_to_update.shape_type == "circle":
+                            radius = float(input("Enter the new radius: "))
+                            new_data = (radius,)
+                        elif shape_to_update.shape_type == "square":
+                            side = float(input("Enter the new side length: "))
+                            new_data = (side,)
+                        manager.update_shape(shape_id, new_data)
+                        print(f"""shape: {shape_to_update.id} type: {shape_to_update.shape_type.capitalize()}
+                                                updated successfully
+                                                the new details: {shape_to_update.to_dict()}""")
             except ValueError:
                 print("Invalid ID! Please enter a number.")
 
@@ -92,7 +106,7 @@ def main():
             try:
                 shape_id = int(input("Enter the ID of the shape to delete: "))
                 manager.delete_shape(shape_id)
-                print(f"Shape with ID {shape_id} deleted successfully (Requires implementing 'delete_shape').")
+                print(f"Shape with ID {shape_id} deleted successfully.")
             except ValueError:
                 print("Invalid ID! Please enter a number.")
 
