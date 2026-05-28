@@ -127,8 +127,6 @@ class ShapeManager:
             logger.exception("Failed to save shapes to JSON: %s", e)
             print(f"\nAn error occurred while saving to JSON: {e}")
 
-
-
     def load_from_json(self):
         """
             Reads data from the JSON file, reconstructs the appropriate shape objects,
@@ -155,6 +153,16 @@ class ShapeManager:
 
     def get_shape_by_id(self, shape_id):
         pass
+
+    def get_new_id(self):
+        """Returns a new, free ID."""
+        max_id = 0
+
+        for shape in self.shapes:
+            if shape.id > max_id:
+                max_id = shape.id
+        new_id = max_id +1
+        return new_id
 
 
 
