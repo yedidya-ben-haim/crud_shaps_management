@@ -35,21 +35,16 @@ class ShapeManager:
                 logger.error("Shape type not recognized")
                 raise ValueError("Shape type not recognized")
 
-            logger.info("Creating new shape: {%s}", new_shape)
+            logger.info("Creating new shape: %s", shape_dic["shape_type"])
             self.shapes.append(new_shape)
-            logger.info("Shape: {%s} append to the shape list", new_shape)
+            logger.info("Shape: %s append to the shape list", shape_dic["shape_type"])
 
             return new_shape
-
-
-
         except ValueError as e:
             # טיפול בשגיאות של ערכים לא חוקיים שהוזנו
-            logger.exception("ValueError occurred: %s", e)
+            logger.error("ValueError occurred: %s", e)
             print(f"\n Error in entered values: {e}")
             return None
-
-
         except KeyError as e:
 
             # טיפול בשגיאה שבה חסרים נתונים במילון (למשל, אין מפתח 'radius' עבור מעגל)
@@ -59,15 +54,32 @@ class ShapeManager:
 
     def get_all_shapes(self):
         """
-            Returns the list of all geometric shapes currently stored in the system.
+            Returns the list of all geometric shapes currently stored in the system
+            and prints their details.
         """
-        pass
+        if not self.shapes:
+            print("No shapes found in the system.")
+            logger.warning("No shapes found in the system.")
+            return []
 
-    def update_shape(self, shape_id, new_data: int | float):
+        print("\n--- All Shapes ---")
+        for shape in self.shapes:
+            # הדפסת המזהה והסוג
+            print(f"ID: {shape.id}")
+            print(f"Type: {shape.shape_type.capitalize()}")
+
+            shape_dict = shape.to_dict()
+            for key, value in shape_dict.items():
+                if key not in ["id", "shape_type"]: # type מעבר רק על השאר הנתונים שהם לא id
+                    print(f"{key.capitalize()}: {value}")
+                    logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
+        return self.shapes
+
+    def update_shape(self, shape_id, new_data: tuple[]):
         """
             Finds a shape by its unique ID and updates its properties with the provided new data.
         """
-        pass
+
 
     def delete_shape(self, shape_id):
         """
@@ -89,15 +101,21 @@ class ShapeManager:
         try:
             with open("shapes.json", "r", encoding="utf-8") as file:
                 shape_list = json.load(file)
-                logger.info("Shapes loaded from JSON")
 
                 for shape in shape_list:
-                    self.create_shape(shape)
-
+                    try:
+                        self.create_shape(shape)
+                    except (ValueError, KeyError) as e:
+                        logger.warning("Skipping on invalid shape in JSON, Error: %s", e)
+                logger.info("Data loaded successfully from JSON file.")
 
         except FileNotFoundError:
-            logger.exception("File not found")
+            logger.warning("shapes.json file not found. Starting with an empty list.")
+            self.shapes = []
 
+        except json.decoder.JSONDecodeError:
+            logger.warning("shapes.json is empty or invalid. Starting with an empty list.")
+            self.shapes = []
 
 
 
