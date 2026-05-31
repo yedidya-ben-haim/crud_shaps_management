@@ -1,3 +1,6 @@
+# GitHub url: https://github.com/yedidya-ben-haim/crud_shaps_management
+
+
 import logging
 from shape_manager import ShapeManager
 
