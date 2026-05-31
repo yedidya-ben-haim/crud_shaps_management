@@ -15,32 +15,39 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def print_main_menu():
+    """
+        Displaying the main menu to the user
+    """
+    print("\n--- Shape Management System ---")
+    print("1. Add shape")
+    print("2. Show all shapes")
+    print("3. Update shape")
+    print("4. Delete shape")
+    print("5. Exit")
+
+
+
 def main():
     logger.info("The program started running.")
     manager = ShapeManager()
 
     while True:
 
-        # Displaying the main menu to the user
-        print("\n--- Shape Management System ---")
-        print("1. Add shape")
-        print("2. Show all shapes")
-        print("3. Update shape")
-        print("4. Delete shape")
-        print("5. Exit")
+        print_main_menu()
 
         choice = input("Enter your choice (1-5): ")
 
         # Option 1: Create
         if choice == '1':
-            logger.info("Add shape chosen")
-            print("\nChoose a shape:")
-            print("1. Square")
-            print("2. Rectangle")
-            print("3. Circle")
-
             while True:
-                shape_choice = input("Enter shape type (1-3): ")
+                logger.info("Add shape chosen")
+                print("\nChoose a shape:")
+                print("1. Square")
+                print("2. Rectangle")
+                print("3. Circle")
+                print("4. return")
+                shape_choice = input("Enter shape type (1-3) or 4 for Exit: ")
                 shape_id = manager.get_new_id()
 
                 try:
@@ -57,12 +64,15 @@ def main():
                     elif shape_choice == '3':
                         radius = float(input("Enter radius: "))
                         shape_dic = {"id": shape_id, "shape_type": "circle", "radius": radius}
-
+                    elif shape_choice == '4':
+                        "return"
+                        break
                     else:
                         print("Invalid choice.")
                         continue  # Returns to the start of the while loop
                 except ValueError:
                     print("Invalid input! Please enter numbers only.")
+                    continue
 
                 try:# Passing the dictionary to our completed create_shape function
                     created_shape = manager.create_shape(shape_dic)
