@@ -61,24 +61,25 @@ class ShapeManager:
             and prints their details.
         """
         if not self.shapes:
-            print("No shapes found in the system.")
+            # print("No shapes found in the system.")
             logger.warning("No shapes found in the system.")
             return []
 
-        print("\n--- All Shapes ---")
-        for shape in self.shapes:
-            # print id and type
-            print(f"ID: {shape.id}")
-            print(f"Type: {shape.shape_type.capitalize()}")
-
-            shape_dict = shape.to_dict()
-            for key, value in shape_dict.items():
-                if key not in ["id", "shape_type"]: # type מעבר רק על השאר הנתונים שהם לא id
-                    print(f"{key.capitalize()}: {value}")
-                    logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
-            print(f"Area: {shape.get_area():.2f}")
-            print(f"Perimeter: {shape.get_perimeter():.2f}")
-            print(f"--------------------")
+        # print("\n--- All Shapes ---")
+        # for shape in self.shapes:
+        #     # # print id and type
+        #     # print(f"ID: {shape.id}")
+        #     # print(f"Type: {shape.shape_type.capitalize()}")
+        #     #
+        #     # shape_dict = shape.to_dict()
+        #     # for key, value in shape_dict.items():
+        #     #     if key not in ["id", "shape_type"]: # type מעבר רק על השאר הנתונים שהם לא id
+        #     #         print(f"{key.capitalize()}: {value}")
+        #     #         logger.info(f"shape %s %s was printed", shape.id, shape.shape_type)
+        #     # print(f"Area: {shape.get_area():.2f}")
+        #     # print(f"Perimeter: {shape.get_perimeter():.2f}")
+        #     # print(f"--------------------")
+        return self.shapes
 
         return self.shapes
 
