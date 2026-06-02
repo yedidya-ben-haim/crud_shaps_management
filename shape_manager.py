@@ -1,7 +1,5 @@
 import json
 
-import shape
-from circle import Circle
 from rectangle import Rectangle
 from square import Square
 from circle import Circle
@@ -171,6 +169,17 @@ class ShapeManager:
         new_id = max_id + 1
         logger.info(f"New ID find: {new_id}")
         return new_id
+
+
+    def get_total_area(self):
+        """
+            Return the total area of all shapes
+        """
+        sum_of_area = 0
+
+        for shape in self.shapes:
+            sum_of_area += shape.get_area()
+        return sum_of_area
 
 
 
