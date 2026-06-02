@@ -64,7 +64,7 @@ class ShapeManager:
             # print("No shapes found in the system.")
             logger.warning("No shapes found in the system.")
             return []
-
+        return self.shapes
         # print("\n--- All Shapes ---")
         # for shape in self.shapes:
         #     # # print id and type
@@ -79,7 +79,7 @@ class ShapeManager:
         #     # print(f"Area: {shape.get_area():.2f}")
         #     # print(f"Perimeter: {shape.get_perimeter():.2f}")
         #     # print(f"--------------------")
-        return self.shapes
+
 
         return self.shapes
 
