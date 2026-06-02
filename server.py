@@ -26,6 +26,11 @@ def total_area():
     round_area = round(area, 2)
     return {"total_shapes_area": round_area}
 
+@app.get("/shapes/count")
+def get_shape_count():
+    total_shape = len(manager.shapes)
+    return {"total shape:": total_shape}
+
 
 @app.get("/shapes/{id}")
 def get_shape_by_id(id: int):
@@ -41,6 +46,7 @@ def create_shape(shape_dic: dict):
     id = manager.get_new_id()
     shape_dic["id"] = id
     new_shape = manager.create_shape(shape_dic)
+    manager.save_to_json()
     return new_shape.to_dict()
 
 
@@ -50,6 +56,7 @@ def update_shape(id: int,new_data: dict):
     update_shape = manager.update_shape(id,new_data)
     if update_shape is None:
         raise HTTPException(status_code=404, detail="Error in shape update")
+    manager.save_to_json()
     return updated_shape.to_dict()
 
 @app.delete("/shapes/{id}")
@@ -57,12 +64,6 @@ def delete_shape(id: int):
     status_of_delete = manager.delete_shape(id)
     if status_of_delete is False:
         raise HTTPException(status_code=404, detail=f"Deletion of shape {id} failed.")
+    manager.save_to_json()
 
 
-
-
-
-
-
-
-# TODO ברגע שהשרת נסגר לכתוב לקובץ
