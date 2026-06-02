@@ -44,7 +44,13 @@ def create_shape(shape_dic: dict):
     return new_shape.to_dict()
 
 
-
+@app.put("/shapes/{id}")
+def update_shape(id: int,new_data: dict):
+    new_data = tuple(new_data.values())
+    update_shape = manager.update_shape(id,new_data)
+    if update_shape is None:
+        raise HTTPException(status_code=404, detail="Error in shape transformation")
+    return update_shape
 
 
 

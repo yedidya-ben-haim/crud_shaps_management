@@ -95,6 +95,8 @@ class ShapeManager:
                 elif shape.shape_type == "square":
                     shape.side = new_data[0]
                 logger.info("Shape: %s %s updated successfully", shape.id, shape.shape_type)
+                return shape
+            return None
 
     def delete_shape(self, shape_id):
         """
