@@ -31,6 +31,15 @@ def get_shape_count():
     total_shape = len(manager.shapes)
     return {"total shape:": total_shape}
 
+@app.get("/shapes/type/{type}")
+def get_shape_by_type(type: str):
+    shape_of_type = []
+    for shape in manager.shapes:
+        if shape.shape_type == type:
+            shape_of_type.append(shape.to_dict())
+    return shape_of_type
+
+
 
 @app.get("/shapes/{id}")
 def get_shape_by_id(id: int):
