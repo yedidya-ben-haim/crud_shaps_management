@@ -98,15 +98,18 @@ class ShapeManager:
                 return shape
             return None
 
-    def delete_shape(self, shape_id):
+    def delete_shape(self, shape_id) -> bool:
         """
             Removes a shape from the manager's list by its ID and updates the JSON file.
         """
+
         for shape in self.shapes:
             if shape.id == shape_id:
                 self.shapes.remove(shape)
                 logger.info("Shape: %s removed successfully", shape.to_dict())
-                break
+                return True
+        return False
+
 
     def save_to_json(self):
         """
@@ -171,7 +174,6 @@ class ShapeManager:
         new_id = max_id + 1
         logger.info(f"New ID find: {new_id}")
         return new_id
-
 
     def get_total_area(self):
         """

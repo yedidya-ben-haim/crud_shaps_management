@@ -49,8 +49,17 @@ def update_shape(id: int,new_data: dict):
     new_data = tuple(new_data.values())
     update_shape = manager.update_shape(id,new_data)
     if update_shape is None:
-        raise HTTPException(status_code=404, detail="Error in shape transformation")
-    return update_shape
+        raise HTTPException(status_code=404, detail="Error in shape update")
+    return updated_shape.to_dict()
+
+@app.delete("/shapes/{id}")
+def delete_shape(id: int):
+    status_of_delete = manager.delete_shape(id)
+    if status_of_delete is False:
+        raise HTTPException(status_code=404, detail=f"Deletion of shape {id} failed.")
+
+
+
 
 
 
