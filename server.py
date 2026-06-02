@@ -16,6 +16,14 @@ def home():
 def all_shape():
     return manager.get_all_shapes()
 
+
+@app.get("/shapes/total-area")
+def total_area():
+    area = manager.get_total_area()
+    round_area = round(area, 2)
+    return {"total_shapes_area": round_area}
+
+
 @app.get("/shapes/{id}")
 def get_shape_by_id(id: int):
     shape = manager.get_shape_by_id(id)
@@ -24,7 +32,7 @@ def get_shape_by_id(id: int):
         raise HTTPException(status_code=404, detail="Shape not found")
     return shape.to_dict()
 
-@app.post("/shapes")
+
 
 
 
