@@ -1,12 +1,11 @@
 import requests
 
-new_data = {"shape_type": "square",
-            "side": 54}
+new_data = {"side": 34}
 
 
-url = "http://127.0.0.1:8000/shapes"
+url = "http://127.0.0.1:8000/shapes/5"
 
-r = requests.post(url, json=new_data)
+r = requests.put(url, json=new_data)
 
 print(r.status_code)
 

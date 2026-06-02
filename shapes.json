@@ -2,7 +2,7 @@
     {
         "id": 1,
         "shape_type": "square",
-        "side": 5
+        "side": 87.0
     },
     {
         "id": 4,
@@ -12,6 +12,6 @@
     {
         "id": 5,
         "shape_type": "square",
-        "side": 54.0
+        "side": 34.0
     }
 ]
