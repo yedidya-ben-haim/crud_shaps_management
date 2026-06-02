@@ -19,6 +19,9 @@ def all_shape():
 
 @app.get("/shapes/total-area")
 def total_area():
+    if not manager.shapes:
+        raise HTTPException(status_code=404, detail="No shapes found to calculate area")
+
     area = manager.get_total_area()
     round_area = round(area, 2)
     return {"total_shapes_area": round_area}
@@ -33,6 +36,12 @@ def get_shape_by_id(id: int):
     return shape.to_dict()
 
 
+@app.post("/shapes", status_code=201)
+def create_shape(shape_dic: dict):
+    id = manager.get_new_id()
+    shape_dic["id"] = id
+    new_shape = manager.create_shape(shape_dic)
+    return new_shape.to_dict()
 
 
 

@@ -36,9 +36,9 @@ class ShapeManager:
                 raise ValueError("Shape type not recognized")
 
             logger.info("Creating new shape: %s", new_shape.to_dict())
-            print(f"""--- New Shape ---
-                    {new_shape.to_dict()}
-                    added successfully""")
+            # print(f"""--- New Shape ---
+            #         {new_shape.to_dict()}
+            #         added successfully""")
             self.shapes.append(new_shape)
             logger.info("Shape: -%s- %s append to the shape list", new_shape.id, new_shape.shape_type)
 
