@@ -31,12 +31,14 @@ def home():
     """
         Home page - welcome massage
     """
-
     return {"Welcome":"For the crud shaps project"}
 
 
 @app.get("/shapes")
 def all_shape():
+    """
+        return all shapes dict
+    """
     return manager.get_all_shapes()
 
 
