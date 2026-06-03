@@ -4,6 +4,7 @@
 import logging
 from shape_manager import ShapeManager
 
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s | %(name)s | %(levelname)s | %(message)s',
@@ -95,24 +96,26 @@ def main():
                 shape_id = int(input("Enter the ID of the shape to update: "))
                 shape_to_update = manager.get_shape_by_id(shape_id)
 
+                print(f"the shape to update: {shape_to_update.to_dict()}")
 
                 if shape_to_update is not None:
-                    new_data = ()
+                    new_data = {}
                     if shape_to_update.shape_type == "rectangle":
                         width = float(input("Enter the new side width: "))
-                        length = float(input("Enter the new length: "))
-                        new_data = (width, length)
+                        height = float(input("Enter the new length: "))
+                        new_data["width"] = width
+                        new_data["height"] = height
                     elif shape_to_update.shape_type == "circle":
                         radius = float(input("Enter the new radius: "))
-                        new_data = (radius,)
+                        new_data["radius"] = radius
                     elif shape_to_update.shape_type == "square":
                         side = float(input("Enter the new side length: "))
-                        new_data = (side,)
+                        new_data["side"] = side
 
-                    manager.update_shape(shape_id, new_data)
-                    print(f"""shape: {shape_to_update.id} type: {shape_to_update.shape_type.capitalize()}
-                                                        updated successfully
-                                                        the new details: {shape_to_update.to_dict()}""")
+                    updated_shape = manager.update_shape(shape_id, new_data)
+                    print(f"""shape: {updated_shape.id} | type: {updated_shape.shape_type.capitalize()}
+                              updated successfully
+                              the new details: {updated_shape.to_dict()}""")
                 else:
                     print("Shape not found.")
             except ValueError:
