@@ -69,19 +69,24 @@ def get_shape_count():
     return {"total shape:": total_shape}
 
 
-@app.get("/shapes/type/{type}")
+@app.get("/shapes/type/{shape_type}")
 def get_shape_by_type(shape_type: str):
     """
-        return all shape from this type
-        reise 404 code if tha shape not exist in system
+        return all shapes from this type
+        raise 404 code if the shape does not exist in the system
     """
     shapes_types = manager.get_my_shapes_type()
-    if type not in shapes_types:
+
+    if shape_type not in shapes_types:
         logger.warning("cant find %s in the system", shape_type)
         raise HTTPException(status_code=404, detail="The shape does not exist in the system.")
+
+    shape_of_type = []
+
     for shape in manager.shapes:
         if shape.shape_type == shape_type:
             shape_of_type.append(shape.to_dict())
+
     return shape_of_type
 
 
