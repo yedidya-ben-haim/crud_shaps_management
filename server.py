@@ -77,25 +77,29 @@ def create_shape(shape_dic: ShapeCreate):
     id = manager.get_new_id()
 
     shape_dic = shape_dic.model_dump(exclude_unset=True)
-
     shape_dic["id"] = id
-    new_shape = manager.create_shape(shape_dic)
-    manager.save_to_json()
-    return new_shape.to_dict()
+
+    try:
+        new_shape = manager.create_shape(shape_dic)
+        manager.save_to_json()
+        return new_shape.to_dict()
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.put("/shapes/{id}")
-def update_shape(id: int,new_data: ShapeUpdate):
-    new_data = new_data.model_dump(exclude_unset=True)
-    print(new_data)
-    new_data = tuple(new_data.values())
-    print("abc")
-    update_shaped = manager.update_shape(id,new_data)
+def update_shape(id: int, new_data: ShapeUpdate):
+    update_dict = new_data.model_dump(exclude_unset=True)
 
-    if update_shaped is None:
-        raise HTTPException(status_code=404, detail="Error in shape update")
-    manager.save_to_json()
-    return update_shaped.to_dict()
+    try:
+        updated_shaped = manager.update_shape(id, update_dict)
+
+        if updated_shaped is None:
+            raise HTTPException(status_code=404, detail="Error in shape update")
+        manager.save_to_json()
+        return updated_shaped.to_dict()
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.delete("/shapes/{id}")

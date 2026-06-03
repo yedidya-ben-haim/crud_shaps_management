@@ -2,16 +2,11 @@
     {
         "id": 1,
         "shape_type": "square",
-        "side": 87.0
+        "side": 50.0
     },
     {
         "id": 4,
         "shape_type": "square",
         "side": 2.0
-    },
-    {
-        "id": 5,
-        "shape_type": "square",
-        "side": 34.0
     }
 ]
