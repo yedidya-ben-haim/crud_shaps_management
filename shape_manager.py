@@ -81,22 +81,35 @@ class ShapeManager:
 
         return self.shapes
 
-    def update_shape(self, shape_id, new_data: tuple):
+    def update_shape(self, shape_id, new_data: dict):
         """
             Finds a shape by its unique ID and updates its properties with the provided new data.
         """
-        for shape in self.shapes:
-            if shape.id == shape_id:
-                if shape.shape_type == "rectangle":
-                    shape.width = new_data[0]
-                    shape.height = new_data[1]
-                elif shape.shape_type == "circle":
-                    shape.radius = new_data[0]
-                elif shape.shape_type == "square":
-                    shape.side = new_data[0]
-                logger.info("Shape: %s %s updated successfully", shape.id, shape.shape_type)
-                return shape
-        return None
+        shape = self.get_shape_by_id(shape_id)
+        if not shape:
+            return None
+
+        for key, value in new_data.items():
+            if not isinstance(value, (int, float)) or value <= 0:
+                raise ValueError(f"The field '{key}' must be a number greater than zero.")
+
+
+        if shape.shape_type == "rectangle":
+            if "width" in new_data:
+                shape.width = new_data["width"]
+            if "height" in new_data:
+                shape.height = new_data["height"]
+
+        elif shape.shape_type == "circle":
+            if "radius" in new_data:
+                shape.radius = new_data["radius"]
+
+        elif shape.shape_type == "square":
+            if "side" in new_data:
+                shape.side = new_data["side"]
+
+        logger.info("Shape: %s %s updated successfully", shape.id, shape.shape_type)
+        return shape
 
     def delete_shape(self, shape_id) -> bool:
         """
