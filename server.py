@@ -28,6 +28,10 @@ manager = ShapeManager()
 
 @app.get("/")
 def home():
+    """
+        Home page - welcome massage
+    """
+
     return {"Welcome":"For the crud shaps project"}
 
 
