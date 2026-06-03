@@ -1,8 +1,11 @@
+import logging
 from fastapi import FastAPI, HTTPException
 from shape_manager import ShapeManager
 from pydantic import BaseModel
 from typing import Optional
 
+
+logger = logging.getLogger(__name__)
 
 
 class ShapeCreate(BaseModel):
@@ -44,7 +47,12 @@ def all_shape():
 
 @app.get("/shapes/total-area")
 def total_area():
+    """
+        return all shapes total area
+        raise 404 code if there in no shapes in file
+    """
     if not manager.shapes:
+        logger.warning("cant calculate toatal area because there is no shape in list")
         raise HTTPException(status_code=404, detail="No shapes found to calculate area")
 
     area = manager.get_total_area()
@@ -54,14 +62,22 @@ def total_area():
 
 @app.get("/shapes/count")
 def get_shape_count():
+    """
+        return the count of all shapes
+    """
     total_shape = len(manager.shapes)
     return {"total shape:": total_shape}
 
 
 @app.get("/shapes/type/{type}")
 def get_shape_by_type(shape_type: str):
+    """
+        return all shape from this type
+        reise 404 code if tha shape not exist in system
+    """
     shapes_types = manager.get_my_shapes_type()
     if type not in shapes_types:
+        logger.warning("cant find %s in the system", shape_type)
         raise HTTPException(status_code=404, detail="The shape does not exist in the system.")
     for shape in manager.shapes:
         if shape.shape_type == shape_type:
@@ -71,15 +87,24 @@ def get_shape_by_type(shape_type: str):
 
 @app.get("/shapes/{id}")
 def get_shape_by_id(id: int):
+    """
+        return shape by id
+        raise 404 cose if shape not found
+    """
     shape = manager.get_shape_by_id(id)
 
     if shape is None:
+        logger.warning("shape by id %s not found", id)
         raise HTTPException(status_code=404, detail="Shape not found")
     return shape.to_dict()
 
 
 @app.post("/shapes", status_code=201)
 def create_shape(shape_dic: ShapeCreate):
+    """
+        create new shape
+        raise 400 if not created
+    """
     id = manager.get_new_id()
 
     shape_dic = shape_dic.model_dump(exclude_unset=True)
@@ -95,6 +120,11 @@ def create_shape(shape_dic: ShapeCreate):
 
 @app.put("/shapes/{id}")
 def update_shape(id: int, new_data: ShapeUpdate):
+    """
+        update shape by id
+        raise 400 code if not update
+        raise 404 code if there heve problem in data
+    """
     update_dict = new_data.model_dump(exclude_unset=True)
 
     try:
@@ -109,8 +139,13 @@ def update_shape(id: int, new_data: ShapeUpdate):
 
 
 @app.delete("/shapes/{id}")
+    """
+        delete shape by id
+        raise 404 code if the shape not exists
+    """
 def delete_shape(id: int):
     status_of_delete = manager.delete_shape(id)
     if status_of_delete is False:
+        logger.warning("shape %s not found to delete", id)
         raise HTTPException(status_code=404, detail=f"Deletion of shape {id} failed.")
     manager.save_to_json()
