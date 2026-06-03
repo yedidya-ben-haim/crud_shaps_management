@@ -54,8 +54,9 @@ def get_shape_count():
 
 @app.get("/shapes/type/{type}")
 def get_shape_by_type(shape_type: str):
-    shapes_type = ["rectangle",]
-    shape_of_type = []
+    shapes_types = manager.get_my_shapes_type()
+    if type not in shapes_types:
+        raise HTTPException(status_code=404, detail="The shape does not exist in the system.")
     for shape in manager.shapes:
         if shape.shape_type == shape_type:
             shape_of_type.append(shape.to_dict())

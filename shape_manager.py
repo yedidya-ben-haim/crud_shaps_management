@@ -195,9 +195,3 @@ class ShapeManager:
 
         filter_list = set(list_type)
         return filter_list
-
-
-
-
-
-
