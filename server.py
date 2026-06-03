@@ -21,7 +21,6 @@ class ShapeUpdate(BaseModel):
 
 
 
-
 app = FastAPI()
 
 # Initialize the shape list
@@ -55,6 +54,7 @@ def get_shape_count():
 
 @app.get("/shapes/type/{type}")
 def get_shape_by_type(shape_type: str):
+    shapes_type = ["rectangle",]
     shape_of_type = []
     for shape in manager.shapes:
         if shape.shape_type == shape_type:
@@ -103,5 +103,3 @@ def delete_shape(id: int):
     if status_of_delete is False:
         raise HTTPException(status_code=404, detail=f"Deletion of shape {id} failed.")
     manager.save_to_json()
-
-

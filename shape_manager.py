@@ -185,6 +185,17 @@ class ShapeManager:
             sum_of_area += shape.get_area()
         return sum_of_area
 
+    def get_my_shapes_type(self):
+        """
+            return a set with all kind of type
+        """
+        list_type = []
+        for shape in self.shapes:
+            list_type.append(shape.shape_type)
+
+        filter_list = set(list_type)
+        return filter_list
+
 
 
 
