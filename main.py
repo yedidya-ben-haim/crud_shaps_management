@@ -66,7 +66,7 @@ def main():
                         radius = float(input("Enter radius: "))
                         shape_dic = {"id": shape_id, "shape_type": "circle", "radius": radius}
                     elif shape_choice == '4':
-                        "return"
+                        print("return")
                         break
                     else:
                         print("Invalid choice.")

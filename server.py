@@ -144,11 +144,11 @@ def update_shape(id: int, new_data: ShapeUpdate):
 
 
 @app.delete("/shapes/{id}")
+def delete_shape(id: int):
     """
         delete shape by id
         raise 404 code if the shape not exists
     """
-def delete_shape(id: int):
     status_of_delete = manager.delete_shape(id)
     if status_of_delete is False:
         logger.warning("shape %s not found to delete", id)
