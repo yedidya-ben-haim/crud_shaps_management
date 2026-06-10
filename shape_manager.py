@@ -112,13 +112,10 @@ class ShapeManager:
             Converts all shape objects into dictionaries and writes them to the shapes JSON file.
         """
         try:
-            # 1. יצירת רשימה של מילונים מתוך רשימת האובייקטים של הצורות
-            # אנחנו משתמשים בפונקציית to_dict שנמצאת בכל צורה כדי לקבל את הנתונים שלה
             shapes_data = [shape.to_dict() for shape in self.shapes]
 
-            # 2. פתיחת קובץ ה-JSON למצב כתיבה ("w") ושמירת הנתונים
             with open("shapes.json", "w", encoding="utf-8") as file:
-                # indent=4 דואג שהקובץ יישמר עם ירידות שורות והזחות כדי שיהיה קריא לבני אדם
+
                 json.dump(shapes_data, file, indent=4)
 
             # רישום בלוג והדפסה למשתמש שהפעולה הצליחה
